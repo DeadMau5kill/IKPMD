@@ -84,12 +84,12 @@ public class SeriesActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
             Intent mainIntent = new Intent(this, MainActivity.class);
             startActivity(mainIntent);
-        } else if (id == R.id.nav_film) {
-            Intent filmsIntent = new Intent(this, FilmActivity.class);
-            startActivity(filmsIntent);
         } else if (id == R.id.nav_series) {
             Intent seriesIntent = new Intent(this, SeriesActivity.class);
             startActivity(seriesIntent);
+        } else if (id == R.id.nav_film) {
+            Intent filmsIntent = new Intent(this, FilmActivity.class);
+            startActivity(filmsIntent);
         } else if (id == R.id.nav_stats) {
             Intent seriesIntent = new Intent(this, StatsActivity.class);
             startActivity(seriesIntent);
