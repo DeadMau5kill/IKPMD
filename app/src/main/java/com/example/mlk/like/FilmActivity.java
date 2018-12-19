@@ -1,5 +1,6 @@
 package com.example.mlk.like;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -29,8 +30,8 @@ public class FilmActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent formIntent = new Intent(FilmActivity.this, FormActivity.class);
+                startActivity(formIntent);
             }
         });
 

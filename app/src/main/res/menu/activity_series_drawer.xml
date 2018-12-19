@@ -6,17 +6,20 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:title="Home" />
+            android:title="Home"
+            android:icon="@drawable/ic_home_black_24dp"/>
         <item
             android:id="@+id/nav_series"
-            android:title="Mijn Series" />
+            android:title="Mijn Series"
+            android:icon="@drawable/ic_live_tv_black_24dp"/>
         <item
             android:id="@+id/nav_film"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Mijn Films" />
+            android:icon="@drawable/ic_movie_black_24dp"
+            android:title="Mijn Films"
+            android:visible="true" />
         <item
             android:id="@+id/nav_stats"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_show_chart_black_24dp"
             android:title="Mijn Statistieken" />
     </group>
 
