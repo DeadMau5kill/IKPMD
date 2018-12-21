@@ -1,5 +1,6 @@
 package com.example.mlk.like;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +8,8 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+import java.util.concurrent.TimeUnit;
 
 public class FormActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -26,34 +29,55 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         createTable();
 
         //Create objects for each palette
+        sort_spinner = (Spinner) findViewById(R.id.sort_spinner);
         textName = (EditText) findViewById(R.id.textName);
         textComment = (EditText) findViewById(R.id.textComment);
         textRating = (EditText) findViewById(R.id.textRating);
-        sort_spinner = (Spinner) findViewById(R.id.sort_spinner);
         findViewById(R.id.buttonSubmit).setOnClickListener(this);
     }
 
     //A class that creates the table within the DB
     private void createTable() {
-        String query = "CREATE TABLE IF NOT EXISTS filmseries (\n" +
+        String createQuery = "CREATE TABLE IF NOT EXISTS filmseries (\n" +
                 "\tid INTEGER NOT NULL CONSTRAINT filmseries_pk PRIMARY KEY AUTOINCREMENT,\n" +
-                "\tname VARCHAR(200) NOT NULL,\n" +
-                "\treason VARCHAR(500) NOT NULL,\n" +
-                "\trating INT NOT NULL,\n" +
+                "\tname VARCHAR(200),\n" +
+                "\treason VARCHAR(500),\n" +
+                "\trating INT,\n" +
+                "\tsort VARCHAR(15),\n" +
                 "\tCONSTRAINT checkRating CHECK (rating BETWEEN 1 and 10)\n" +
-                ");";
-        mDatabase.execSQL(query);
+                "\t);";
+        mDatabase.execSQL(createQuery);
     }
 
     //Add the movie or series to the DB
     private void addTuple() {
+        //Extract the user input
         String name = textName.getText().toString().trim();
         String Comment = textComment.getText().toString().trim();
         String rating = textRating.getText().toString().trim();
         String sort = sort_spinner.getSelectedItem().toString();
 
-        //11:56
+        //Catch when the user submits empty values
+        if (name.isEmpty()){
+            textName.setError("Geef een naam op");
+            textName.requestFocus();
+            return;
+        }
+        if (Comment.isEmpty()){
+            textComment.setError("Geef commentaar bij de film of serie");
+            textComment.requestFocus();
+            return;
+        }
+        if (rating.isEmpty()){
+            textRating.setError("Geef een rating van 1 t/m 10");
+            textRating.requestFocus();
+            return;
+        }
 
+        //The query to update the DB table
+        String updateQuery = "INSERT INTO filmseries (name, reason, rating, sort)\n" +
+                "VALUES (?,?,?,?)";
+        mDatabase.execSQL(updateQuery, new String[]{name, Comment, rating, sort});
     }
 
     @Override
@@ -61,6 +85,12 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.buttonSubmit:
                 addTuple();
+                //Notify the user that the operation succeeded
+                Toast.makeText(this, "Je rating is toegevoegd!", Toast.LENGTH_LONG).show();
+
+                //Bring the user to MainActivity when the operation is done
+                Intent mainIntent = new Intent(this, MainActivity.class);
+                startActivity(mainIntent);
                 break;
         }
     }
