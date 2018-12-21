@@ -9,4 +9,10 @@
     <string name="title_activity_film">Mijn Films</string>
     <string name="title_activity_series">Mijn Series</string>
     <string name="title_activity_stats">Mijn Statistieken</string>
+    <string-array name="sort_array">
+        <item>Movie</item>
+        <item>Serie</item>
+    </string-array>
 </resources>
+
+
