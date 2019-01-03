@@ -9,7 +9,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
+import java.util.Calendar;
 
 public class FormActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -44,6 +47,7 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
                 "\treason VARCHAR(500),\n" +
                 "\trating INT,\n" +
                 "\tsort VARCHAR(15),\n" +
+                "\ttime VARCHAR(30),\n" +
                 "\tCONSTRAINT checkRating CHECK (rating BETWEEN 1 and 10)\n" +
                 "\t);";
         mDatabase.execSQL(createQuery);
@@ -56,6 +60,7 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         String Comment = textComment.getText().toString().trim();
         String rating = textRating.getText().toString().trim();
         String sort = sort_spinner.getSelectedItem().toString();
+        String time = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 
         //Catch when the user submits empty values
         if (name.isEmpty()){
@@ -75,9 +80,9 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         //The query to update the DB table
-        String updateQuery = "INSERT INTO filmseries (name, reason, rating, sort)\n" +
-                "VALUES (?,?,?,?)";
-        mDatabase.execSQL(updateQuery, new String[]{name, Comment, rating, sort});
+        String updateQuery = "INSERT INTO filmseries (name, reason, rating, sort, time)\n" +
+                "VALUES (?,?,?,?,?)";
+        mDatabase.execSQL(updateQuery, new String[]{name, Comment, rating, sort, time});
     }
 
     @Override
