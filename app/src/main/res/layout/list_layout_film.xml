@@ -55,14 +55,6 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/buttonEditEmployee"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:background="@color/colorPrimary"
-            android:text="Edit" />
-
-        <Button
             android:id="@+id/buttonDeleteEmployee"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

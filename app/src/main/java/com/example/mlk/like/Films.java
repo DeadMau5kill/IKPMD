@@ -4,11 +4,11 @@ public class Films {
     int id, rating;
     String name, reason, sort, time;
 
-    public Films(int id, int rating, String name, String reason, String sort, String time) {
+    public Films(int id, String name, String reason,int rating, String sort, String time) {
         this.id = id;
-        this.rating = rating;
         this.name = name;
         this.reason = reason;
+        this.rating = rating;
         this.sort = sort;
         this.time = time;
     }
@@ -17,16 +17,16 @@ public class Films {
         return id;
     }
 
-    public int getRating() {
-        return rating;
-    }
-
     public String getName() {
         return name;
     }
 
     public String getReason() {
         return reason;
+    }
+
+    public int getRating() {
+        return rating;
     }
 
     public String getSort() {
