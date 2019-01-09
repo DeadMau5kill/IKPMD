@@ -98,7 +98,7 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(mainIntent);
                 break;
 
-             //case R.id.textView
+            //case R.id.textView
         }
     }
 }

@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class FilmActivity extends AppCompatActivity
     SQLiteDatabase mDatabase;
     ArrayList<Films> filmslist = new ArrayList<Films>();
     ListView listView;
+    //Button btnDelete = (Button) findViewById(R.id.buttonDeleteEmployee);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +81,13 @@ public class FilmActivity extends AppCompatActivity
             FilmsAdapter adapter = new FilmsAdapter(this, R.layout.list_layout_film,filmslist);
             listView.setAdapter(adapter);
         }
+        /*btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String sqlDelete = "DELETE FROM filmseries WHERE id = ";
+            }
+        }); */
     };
 
     @Override
