@@ -2,6 +2,8 @@ package com.example.mlk.like;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,10 +16,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FilmActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    //mDatabase is a SQLiteDatabase
+    SQLiteDatabase mDatabase;
+    ArrayList<Films> filmslist = new ArrayList<Films>();
+    ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +53,35 @@ public class FilmActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Open the database
+        mDatabase = openOrCreateDatabase(FormActivity.database_name, MODE_PRIVATE, null);
+        listView = (ListView) findViewById(R.id.listViewEmployees);
+        loadFilmsFromDB();
     }
+
+    private void loadFilmsFromDB(){
+        String sql = "SELECT * FROM filmseries";
+
+        //Create a cursor that acts as a interface containing the twodimentional Database
+        Cursor Filmcursor = mDatabase.rawQuery(sql,null);
+
+        if (Filmcursor.moveToFirst()){
+            do {
+                filmslist.add(new Films(
+                        Filmcursor.getInt(0),
+                        Filmcursor.getInt(1),
+                        Filmcursor.getString(2),
+                        Filmcursor.getString(3),
+                        Filmcursor.getString(4),
+                        Filmcursor.getString(5)
+                ));
+            } while (Filmcursor.moveToNext());
+
+            FilmsAdapter adapter = new FilmsAdapter(this, R.layout.list_layout_film,filmslist);
+            listView.setAdapter(adapter);
+        }
+    };
 
     @Override
     public void onBackPressed() {
