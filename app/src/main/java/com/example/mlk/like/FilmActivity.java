@@ -14,8 +14,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -57,6 +59,14 @@ public class FilmActivity extends AppCompatActivity
         //Open the database
         mDatabase = openOrCreateDatabase(FormActivity.database_name, MODE_PRIVATE, null);
         listView = (ListView) findViewById(R.id.listViewEmployees);
+        /* listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(FilmActivity.this, filmslist.get(position).toString(), Toast.LENGTH_LONG).show();
+            }
+        });*/
+
+
         loadFilmsFromDB();
     }
 
@@ -64,7 +74,7 @@ public class FilmActivity extends AppCompatActivity
         String sql = "SELECT * FROM filmseries WHERE sort ='Movie' ";
 
         //Create a cursor that acts as a interface containing the twodimentional Database
-        Cursor Filmcursor = mDatabase.rawQuery(sql,null);
+        final Cursor Filmcursor = mDatabase.rawQuery(sql,null);
 
         if (Filmcursor.moveToFirst()){
             do {
@@ -81,13 +91,8 @@ public class FilmActivity extends AppCompatActivity
             FilmsAdapter adapter = new FilmsAdapter(this, R.layout.list_layout_film,filmslist);
             listView.setAdapter(adapter);
         }
-        /*btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                String sqlDelete = "DELETE FROM filmseries WHERE id = ";
-            }
-        }); */
+
     };
 
     @Override

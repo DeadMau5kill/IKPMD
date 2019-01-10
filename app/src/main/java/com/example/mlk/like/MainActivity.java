@@ -18,9 +18,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    SQLiteDatabase mDatabase;
+    public static final String database_name = "films_series_data";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,21 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //Opening Database connection and creating a database.
+        mDatabase = openOrCreateDatabase(database_name, MODE_PRIVATE, null);
+        String createQuery = "CREATE TABLE IF NOT EXISTS filmseries (\n" +
+                "\tid INTEGER NOT NULL CONSTRAINT filmseries_pk PRIMARY KEY AUTOINCREMENT,\n" +
+                "\tname VARCHAR(200),\n" +
+                "\treason VARCHAR(500),\n" +
+                "\trating INT,\n" +
+                "\tsort VARCHAR(15),\n" +
+                "\ttime VARCHAR(30),\n" +
+                "\tCONSTRAINT checkRating CHECK (rating BETWEEN 1 and 10)\n" +
+                "\t);";
+        mDatabase.execSQL(createQuery);
     }
+
 
     @Override
     public void onBackPressed() {

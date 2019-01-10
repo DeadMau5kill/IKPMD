@@ -9,7 +9,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
 import java.util.Calendar;
@@ -29,7 +28,6 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
 
         //Create the database and insert the table calling "createTable()"
         mDatabase = openOrCreateDatabase(database_name, MODE_PRIVATE, null);
-        createTable();
 
         //Create objects for each palette
         sort_spinner = (Spinner) findViewById(R.id.sort_spinner);
@@ -37,20 +35,6 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         textComment = (EditText) findViewById(R.id.textComment);
         textRating = (EditText) findViewById(R.id.textRating);
         findViewById(R.id.buttonSubmit).setOnClickListener(this);
-    }
-
-    //A class that creates the table within the DB
-    private void createTable() {
-        String createQuery = "CREATE TABLE IF NOT EXISTS filmseries (\n" +
-                "\tid INTEGER NOT NULL CONSTRAINT filmseries_pk PRIMARY KEY AUTOINCREMENT,\n" +
-                "\tname VARCHAR(200),\n" +
-                "\treason VARCHAR(500),\n" +
-                "\trating INT,\n" +
-                "\tsort VARCHAR(15),\n" +
-                "\ttime VARCHAR(30),\n" +
-                "\tCONSTRAINT checkRating CHECK (rating BETWEEN 1 and 10)\n" +
-                "\t);";
-        mDatabase.execSQL(createQuery);
     }
 
     //Add the movie or series to the DB
