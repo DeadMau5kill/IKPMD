@@ -14,10 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -88,7 +85,7 @@ public class FilmActivity extends AppCompatActivity
                 ));
             } while (Filmcursor.moveToNext());
 
-            FilmsAdapter adapter = new FilmsAdapter(this, R.layout.list_layout_film,filmslist);
+            FilmsAdapter adapter = new FilmsAdapter(this, R.layout.list_layout_film,filmslist, mDatabase);
             listView.setAdapter(adapter);
         }
 
