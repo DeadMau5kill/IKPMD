@@ -42,16 +42,18 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         //Extract the user input
         String name = textName.getText().toString().trim();
         String Comment = textComment.getText().toString().trim();
-        String rating = textRating.getText().toString().trim();
+        String rating = textRating.getText().toString().replace(',', '.').trim();
         String sort = sort_spinner.getSelectedItem().toString();
         String time = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 
         //Catch when the user submits empty values
-        if (name.isEmpty()){
+        if (name.isEmpty() || Comment.isEmpty() || rating.isEmpty() || Float.parseFloat(rating) > 10
+                || Float.parseFloat(rating) < 1){
+
             textName.setError("Geef een naam op");
             textName.requestFocus();
             return;
-        }
+        }/**
         if (Comment.isEmpty()){
             textComment.setError("Geef commentaar bij de film of serie");
             textComment.requestFocus();
@@ -61,12 +63,14 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
             textRating.setError("Geef een rating van 1 t/m 10");
             textRating.requestFocus();
             return;
-        }
+        } **/
 
         //The query to update the DB table
-        String updateQuery = "INSERT INTO filmseries (name, reason, rating, sort, time)\n" +
-                "VALUES (?,?,?,?,?)";
-        mDatabase.execSQL(updateQuery, new String[]{name, Comment, rating, sort, time});
+        else {
+            String updateQuery = "INSERT INTO filmseries (name, reason, rating, sort, time)\n" +
+                    "VALUES (?,?,?,?,?)";
+            mDatabase.execSQL(updateQuery, new String[]{name, Comment, rating, sort, time});
+        }
     }
 
     @Override

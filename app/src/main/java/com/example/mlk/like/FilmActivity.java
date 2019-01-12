@@ -25,7 +25,6 @@ public class FilmActivity extends AppCompatActivity
     SQLiteDatabase mDatabase;
     ArrayList<Films> filmslist = new ArrayList<Films>();
     ListView listView;
-    //Button btnDelete = (Button) findViewById(R.id.buttonDeleteEmployee);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,19 +55,11 @@ public class FilmActivity extends AppCompatActivity
         //Open the database
         mDatabase = openOrCreateDatabase(FormActivity.database_name, MODE_PRIVATE, null);
         listView = (ListView) findViewById(R.id.listViewEmployees);
-        /* listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(FilmActivity.this, filmslist.get(position).toString(), Toast.LENGTH_LONG).show();
-            }
-        });*/
-
-
         loadFilmsFromDB();
     }
 
     private void loadFilmsFromDB(){
-        String sql = "SELECT * FROM filmseries WHERE sort ='Movie' ";
+        String sql = "SELECT * FROM filmseries WHERE sort = 'Movie' ";
 
         //Create a cursor that acts as a interface containing the twodimentional Database
         final Cursor Filmcursor = mDatabase.rawQuery(sql,null);
@@ -79,7 +70,7 @@ public class FilmActivity extends AppCompatActivity
                         Filmcursor.getInt(0),
                         Filmcursor.getString(1),
                         Filmcursor.getString(2),
-                        Filmcursor.getInt(3),
+                        Filmcursor.getFloat(3),
                         Filmcursor.getString(4),
                         Filmcursor.getString(5)
                 ));

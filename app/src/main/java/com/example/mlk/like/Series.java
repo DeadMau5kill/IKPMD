@@ -1,10 +1,11 @@
 package com.example.mlk.like;
 //In this class we will retrieve the films from the DB
 public class Series {
-    int id, rating;
+    int id;
+    float rating;
     String name, reason, sort, time;
 
-    public Series(int id, String name, String reason,int rating, String sort, String time) {
+    public Series(int id, String name, String reason,float rating, String sort, String time) {
         this.id = id;
         this.name = name;
         this.reason = reason;
@@ -25,7 +26,7 @@ public class Series {
         return reason;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 

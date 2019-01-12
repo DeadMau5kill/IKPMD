@@ -16,4 +16,9 @@
         tools:context="abhiandroid.com.listexample.MainActivity">
     </ListView>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Delete db"
+        android:id="@+id/btnDelete"/>
 </android.support.constraint.ConstraintLayout>

@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -31,7 +32,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -47,11 +47,19 @@ public class MainActivity extends AppCompatActivity
 
         //Opening Database connection and creating a database.
         mDatabase = openOrCreateDatabase(database_name, MODE_PRIVATE, null);
+        /**Button btnDelete = (Button) findViewById(R.id.btnDelete);
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String query = "DROP TABLE filmseries";
+                mDatabase.execSQL(query);
+            }
+        }); **/
         String createQuery = "CREATE TABLE IF NOT EXISTS filmseries (\n" +
                 "\tid INTEGER NOT NULL CONSTRAINT filmseries_pk PRIMARY KEY AUTOINCREMENT,\n" +
                 "\tname VARCHAR(200),\n" +
                 "\treason VARCHAR(500),\n" +
-                "\trating INT,\n" +
+                "\trating FLOAT,\n" +
                 "\tsort VARCHAR(15),\n" +
                 "\ttime VARCHAR(30),\n" +
                 "\tCONSTRAINT checkRating CHECK (rating BETWEEN 1 and 10)\n" +

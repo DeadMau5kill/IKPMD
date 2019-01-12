@@ -67,7 +67,7 @@ public class SeriesActivity extends AppCompatActivity
                         Seriecursor.getInt(0),
                         Seriecursor.getString(1),
                         Seriecursor.getString(2),
-                        Seriecursor.getInt(3),
+                        Seriecursor.getFloat(3),
                         Seriecursor.getString(4),
                         Seriecursor.getString(5)
                 ));
