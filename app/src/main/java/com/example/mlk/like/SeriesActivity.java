@@ -36,7 +36,8 @@ public class SeriesActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent formIntent = new Intent(SeriesActivity.this, FormActivity.class);
+                Intent formIntent = new Intent(SeriesActivity.this,
+                        FormActivity.class);
                 startActivity(formIntent);
             }
         });
@@ -56,7 +57,7 @@ public class SeriesActivity extends AppCompatActivity
     }
 
     private void loadFilmsFromDB(){
-        String sql = "SELECT * FROM filmseries WHERE sort ='Serie' ";
+        String sql = "SELECT * FROM filmseries WHERE sort = 'Serie' ";
 
         //Create a cursor that acts as a interface containing the twodimentional Database
         final Cursor Seriecursor = mDatabase.rawQuery(sql,null);
@@ -73,7 +74,8 @@ public class SeriesActivity extends AppCompatActivity
                 ));
             } while (Seriecursor.moveToNext());
 
-            SeriesAdapter adapter1 = new SeriesAdapter(this, R.layout.list_layout_serie, serieslist, mDatabase);
+            SeriesAdapter adapter1 = new SeriesAdapter(this,
+                    R.layout.list_layout_serie, serieslist, mDatabase);
             listView.setAdapter(adapter1);
         }
 

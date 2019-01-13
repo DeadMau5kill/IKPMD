@@ -9,6 +9,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import org.w3c.dom.Comment;
+
 import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
 import java.util.Calendar;
@@ -44,32 +47,19 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         String Comment = textComment.getText().toString().trim();
         String rating = textRating.getText().toString().replace(',', '.').trim();
         String sort = sort_spinner.getSelectedItem().toString();
-        String time = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+        String time = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance()
+                .getTime());
+        String regex = "[+-]?([0-9]*[.])?[0-9]+";
+        CharSequence cs = "()/N*;#";
 
-        //Catch when the user submits empty values
-        if (name.isEmpty() || Comment.isEmpty() || rating.isEmpty() || Float.parseFloat(rating) > 10
-                || Float.parseFloat(rating) < 1){
-
-            textName.setError("Geef een naam op");
-            textName.requestFocus();
-            return;
-        }/**
-        if (Comment.isEmpty()){
-            textComment.setError("Geef commentaar bij de film of serie");
-            textComment.requestFocus();
-            return;
-        }
-        if (rating.isEmpty()){
-            textRating.setError("Geef een rating van 1 t/m 10");
-            textRating.requestFocus();
-            return;
-        } **/
-
-        //The query to update the DB table
-        else {
+        if(rating.matches(regex)){
             String updateQuery = "INSERT INTO filmseries (name, reason, rating, sort, time)\n" +
                     "VALUES (?,?,?,?,?)";
             mDatabase.execSQL(updateQuery, new String[]{name, Comment, rating, sort, time});
+            return;
+        } else {
+            Toast.makeText(this, "Fout", Toast.LENGTH_SHORT).show();
+            return;
         }
     }
 
@@ -79,7 +69,8 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.buttonSubmit:
                 addTuple();
                 //Notify the user that the operation succeeded
-                Toast.makeText(this, "Je rating is toegevoegd!", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Je rating is toegevoegd!", Toast.LENGTH_LONG)
+                        //.show();
 
                 //Bring the user to MainActivity when the operation is done
                 Intent mainIntent = new Intent(this, MainActivity.class);
