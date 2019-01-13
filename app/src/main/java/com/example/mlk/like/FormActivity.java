@@ -51,8 +51,11 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
                 .getTime());
         String regex = "[+-]?([0-9]*[.])?[0-9]+";
         CharSequence cs = "()/N*;#";
-
-        if(rating.matches(regex)){
+        if(rating.isEmpty() || Comment.isEmpty() || name.isEmpty()){
+            Toast.makeText(this, "Empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else if(rating.matches(regex)){
             String updateQuery = "INSERT INTO filmseries (name, reason, rating, sort, time)\n" +
                     "VALUES (?,?,?,?,?)";
             mDatabase.execSQL(updateQuery, new String[]{name, Comment, rating, sort, time});
