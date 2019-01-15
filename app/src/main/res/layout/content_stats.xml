@@ -8,8 +8,25 @@
     tools:context=".StatsActivity"
     tools:showIn="@layout/app_bar_stats">
 
-    <!-- <com.github.mikephil.charting.charts.PieChart
-        android:layout_height="match_parent"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:id="@+id/piechart1"/> -->
-</android.support.constraint.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <lecho.lib.hellocharts.view.PieChartView
+            android:id="@+id/piechart"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+        <TextView
+            android:id="@+id/textAvgScore"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+        <TextView
+            android:id="@+id/textAvgScoreMovie"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+        <TextView
+            android:id="@+id/textAvgScoreSerie"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>

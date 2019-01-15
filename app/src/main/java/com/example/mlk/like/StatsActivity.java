@@ -3,6 +3,7 @@ package com.example.mlk.like;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,13 +21,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-//import com.github.mikephil.charting.charts.PieChart;
-
-//import com.github.mikephil.charting.charts.PieChart;
-
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
+
+import lecho.lib.hellocharts.model.PieChartData;
+import lecho.lib.hellocharts.model.SliceValue;
+import lecho.lib.hellocharts.view.PieChartView;
 
 public class StatsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -69,10 +70,56 @@ public class StatsActivity extends AppCompatActivity
 
         Integer bufferMovieInt = Integer.valueOf(bufferMovie.toString());
         Integer bufferSerieInt = Integer.valueOf(bufferSerie.toString());
-        float[] yData = {bufferMovieInt, bufferSerieInt};
-        //PieChart pieChart;
-        Log.d(TAG, "onCreate: Created PieChart now");
+        // referencing to the piechart in contents_stats.xml
+        PieChartView pieChartView = findViewById(R.id.piechart);
+        // creating array to add data to for piechart
+        List<SliceValue> pieData = new ArrayList<>();
+        //adding data
+        pieData.add(new SliceValue(bufferMovieInt, Color.BLUE).setLabel("Movies: " + bufferMovieInt
+                .toString()));
+        pieData.add(new SliceValue(bufferSerieInt, Color.RED).setLabel("Series: " + bufferSerieInt
+                .toString()));
+        // Adding data to piechart
+        PieChartData pieChartData = new PieChartData(pieData);
+        // Creating chart
+        pieChartView.setPieChartData(pieChartData.setHasLabels(true));
 
+        //SQL strings klaarmaken
+        String sqlAverageScore = "SELECT AVG(rating) FROM filmseries";
+        String sqlAverageScoreMovie = "SELECT AVG(rating) FROM filmseries WHERE sort = 'Movie'";
+        String sqlAverageScoreSerie = "SELECT AVG(rating) FROM filmseries WHERE sort = 'Serie'";
+
+        Cursor avgScore = mDatabase.rawQuery(sqlAverageScore, null);
+        StringBuffer bufferAvgScore = new StringBuffer();
+        while(avgScore.moveToNext()){
+            bufferAvgScore.append(avgScore.getString(0));
+        }
+
+        Cursor avgScoreMovie = mDatabase.rawQuery(sqlAverageScoreMovie, null);
+        StringBuffer bufferAvgScoreMovie = new StringBuffer();
+        while (avgScoreMovie.moveToNext()){
+            bufferAvgScoreMovie.append(avgScoreMovie.getString(0));
+        }
+
+        Cursor avgScoreSerie = mDatabase.rawQuery(sqlAverageScoreSerie, null);
+        StringBuffer bufferAvgScoreSerie = new StringBuffer();
+        while (avgScoreSerie.moveToNext()){
+            bufferAvgScoreSerie.append(avgScoreSerie.getString(0));
+        }
+
+        String avg = bufferAvgScore.toString();
+        String avgMovie = bufferAvgScoreMovie.toString();
+        String avgSerie = bufferAvgScoreSerie.toString();
+
+        TextView textAvgScore = (TextView) findViewById(R.id.textAvgScore);
+        TextView textAvgScoreMovie = (TextView) findViewById(R.id.textAvgScoreMovie);
+        TextView textAvgScoreSerie = (TextView) findViewById(R.id.textAvgScoreSerie);
+
+        textAvgScore.setText("Het gemiddelde score die gegeven is: " + avg);
+        textAvgScoreMovie.setText("Het gemiddelde getal die gegeven is voor een film is: "
+                + avgMovie);
+        textAvgScoreSerie.setText("Het gemiddelde getal die gegeven is voor een film is: "
+                + avgSerie);
     }
 
     @Override
