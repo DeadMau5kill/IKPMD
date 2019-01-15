@@ -2,6 +2,7 @@ package com.example.mlk.like;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -50,9 +51,18 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         String time = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance()
                 .getTime());
         String regex = "[+-]?([0-9]*[.])?[0-9]+";
-        CharSequence cs = "()/N*;#";
+        if(rating.matches(regex) != true){
+            Toast.makeText(this, "Foute input, gebruik getallen",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
         if(rating.isEmpty() || Comment.isEmpty() || name.isEmpty()){
             Toast.makeText(this, "Empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else if(Float.parseFloat(rating) > 10 || Float.parseFloat(rating) < 1){
+            Toast.makeText(this, "Fout, te hoog of te laag getal", Toast.LENGTH_SHORT)
+                    .show();
             return;
         }
         else if(rating.matches(regex)){
