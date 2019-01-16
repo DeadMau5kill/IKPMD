@@ -22,11 +22,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.lang.reflect.Array;
+import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.ChartData;
+import lecho.lib.hellocharts.model.Column;
+import lecho.lib.hellocharts.model.ColumnChartData;
 import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.model.SliceValue;
+import lecho.lib.hellocharts.model.SubcolumnValue;
+import lecho.lib.hellocharts.util.ChartUtils;
+import lecho.lib.hellocharts.view.ColumnChartView;
 import lecho.lib.hellocharts.view.PieChartView;
 
 public class StatsActivity extends AppCompatActivity
@@ -120,6 +128,34 @@ public class StatsActivity extends AppCompatActivity
                 + avgMovie);
         textAvgScoreSerie.setText("Het gemiddelde getal die gegeven is voor een film is: "
                 + avgSerie);
+
+        //SQL strings maken
+        String top5sql = "SELECT * FROM filmseries ORDER BY rating DESC LIMIT 5";
+        Cursor top5Score = mDatabase.rawQuery(top5sql, null);
+        List<Float> items = new ArrayList<Float>();
+        while (top5Score.moveToNext()){
+            items.add(top5Score.getFloat(3));
+        }
+        ColumnChartView colum_chart = (ColumnChartView) findViewById(R.id.columnchart);
+        ColumnChartData colum_data;
+        int numSubcolums = 1;
+        int numColums = items.size();
+        List<Column> colums = new ArrayList<Column>();
+        List<SubcolumnValue> values;
+        for (int i = 0; i < numColums; i++) {
+            values = new ArrayList<SubcolumnValue>();
+            values.add(new SubcolumnValue(items.get(i), ChartUtils.pickColor()));
+            Column colum = new Column(values);
+            colum.setHasLabels(true);
+            colums.add(colum);
+        }
+        colum_data = new ColumnChartData(colums);
+        Axis axisX = new Axis().setHasLines(true);
+        Axis axisY = new Axis().setHasLines(true);
+        axisX.setName("Films");
+        axisY.setName("Rating");
+        colum_data.setAxisYLeft(axisY);
+        colum_chart.setColumnChartData(colum_data);
     }
 
     @Override
