@@ -6,9 +6,9 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_film">Mijn Films</string>
-    <string name="title_activity_series">Mijn Series</string>
-    <string name="title_activity_stats">Mijn Statistieken</string>
+    <string name="title_activity_film">My Movies</string>
+    <string name="title_activity_series">My Series</string>
+    <string name="title_activity_stats">My Stats</string>
     <string-array name="sort_array">
         <item>Movie</item>
         <item>Serie</item>
