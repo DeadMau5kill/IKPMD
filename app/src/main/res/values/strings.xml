@@ -13,6 +13,9 @@
         <item>Movie</item>
         <item>Serie</item>
     </string-array>
+    <string name="stats_piechart">Amount of movies VS. films reviewed</string>
+    <string name="stats_generalstats">Average ratings given</string>
+    <string name="stats_barchart">Top 5 highest rated movies</string>
 </resources>
 
 
