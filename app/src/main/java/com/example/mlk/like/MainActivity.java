@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity
                 "\trating FLOAT,\n" +
                 "\tsort VARCHAR(15),\n" +
                 "\ttime VARCHAR(30),\n" +
+                "\timdb_rating FLOAT,\n" +
+                "\tomdb_year INTEGER,\n" +
                 "\tCONSTRAINT checkRating CHECK (rating BETWEEN 1 and 10)\n" +
                 "\t);";
         mDatabase.execSQL(createQuery);
@@ -72,7 +74,9 @@ public class MainActivity extends AppCompatActivity
                         FilmSeriecursor.getString(2),
                         FilmSeriecursor.getFloat(3),
                         FilmSeriecursor.getString(4),
-                        FilmSeriecursor.getString(5)
+                        FilmSeriecursor.getString(5),
+                        FilmSeriecursor.getFloat(6),
+                        FilmSeriecursor.getInt(7)
                 ));
             } while (FilmSeriecursor.moveToNext());
 
@@ -104,11 +108,6 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
