@@ -36,6 +36,7 @@ import lecho.lib.hellocharts.model.SubcolumnValue;
 import lecho.lib.hellocharts.util.ChartUtils;
 import lecho.lib.hellocharts.view.ColumnChartView;
 import lecho.lib.hellocharts.view.PieChartView;
+import com.example.mlk.like.R;
 
 public class StatsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -123,11 +124,9 @@ public class StatsActivity extends AppCompatActivity
         TextView textAvgScoreMovie = (TextView) findViewById(R.id.textAvgScoreMovie);
         TextView textAvgScoreSerie = (TextView) findViewById(R.id.textAvgScoreSerie);
 
-        textAvgScore.setText("Het gemiddelde score die gegeven is: " + avg);
-        textAvgScoreMovie.setText("Het gemiddelde getal die gegeven is voor een film is: "
-                + avgMovie);
-        textAvgScoreSerie.setText("Het gemiddelde getal die gegeven is voor een film is: "
-                + avgSerie);
+        textAvgScore.setText("The average rating given is: " + avg);
+        textAvgScoreMovie.setText("The average score given for movies is: " + avgMovie);
+        textAvgScoreSerie.setText("The average score given for serie is: " + avgSerie);
 
         //SQL strings maken
         String top5sql = "SELECT * FROM filmseries ORDER BY rating DESC LIMIT 5";
