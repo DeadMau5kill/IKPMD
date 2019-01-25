@@ -46,6 +46,19 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="2017-09-30 10:00:00" />
+        <TextView
+            android:id="@+id/textViewIMDBrating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="0.1" />
+
+        <TextView
+            android:id="@+id/textViewYear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="2000" />
 
     </LinearLayout>
 
@@ -63,6 +76,7 @@
             android:background="@color/colorWhite"
             android:textColor="@color/colorRed"
             android:text="X"
+            android:textSize="20dp"
             android:outlineAmbientShadowColor="@color/colorPrimary"/>
 
     </LinearLayout>

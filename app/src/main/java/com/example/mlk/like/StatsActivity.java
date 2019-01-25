@@ -5,10 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -17,17 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.lang.reflect.Array;
-import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
-
+import lecho.lib.hellocharts.listener.ColumnChartOnValueSelectListener;
 import lecho.lib.hellocharts.model.Axis;
-import lecho.lib.hellocharts.model.ChartData;
 import lecho.lib.hellocharts.model.Column;
 import lecho.lib.hellocharts.model.ColumnChartData;
 import lecho.lib.hellocharts.model.PieChartData;
@@ -36,13 +27,11 @@ import lecho.lib.hellocharts.model.SubcolumnValue;
 import lecho.lib.hellocharts.util.ChartUtils;
 import lecho.lib.hellocharts.view.ColumnChartView;
 import lecho.lib.hellocharts.view.PieChartView;
-import com.example.mlk.like.R;
 
 public class StatsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     SQLiteDatabase mDatabase;
     public static final String database_name = "films_series_data";
-    String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +65,7 @@ public class StatsActivity extends AppCompatActivity
         while(result.moveToNext()){
             bufferSerie.append(result.getString(0));
         }
+        resultMovie.close();
 
         Integer bufferMovieInt = Integer.valueOf(bufferMovie.toString());
         Integer bufferSerieInt = Integer.valueOf(bufferSerie.toString());
@@ -103,18 +93,21 @@ public class StatsActivity extends AppCompatActivity
         while(avgScore.moveToNext()){
             bufferAvgScore.append(avgScore.getString(0));
         }
+        avgScore.close();
 
         Cursor avgScoreMovie = mDatabase.rawQuery(sqlAverageScoreMovie, null);
         StringBuffer bufferAvgScoreMovie = new StringBuffer();
         while (avgScoreMovie.moveToNext()){
             bufferAvgScoreMovie.append(avgScoreMovie.getString(0));
         }
+        avgScoreMovie.close();
 
         Cursor avgScoreSerie = mDatabase.rawQuery(sqlAverageScoreSerie, null);
         StringBuffer bufferAvgScoreSerie = new StringBuffer();
         while (avgScoreSerie.moveToNext()){
             bufferAvgScoreSerie.append(avgScoreSerie.getString(0));
         }
+        avgScoreSerie.close();
 
         String avg = bufferAvgScore.toString();
         String avgMovie = bufferAvgScoreMovie.toString();
@@ -132,15 +125,18 @@ public class StatsActivity extends AppCompatActivity
         String top5sql = "SELECT * FROM filmseries ORDER BY rating DESC LIMIT 5";
         Cursor top5Score = mDatabase.rawQuery(top5sql, null);
         List<Float> items = new ArrayList<Float>();
+
         while (top5Score.moveToNext()){
             items.add(top5Score.getFloat(3));
         }
+        top5Score.close();
+
         ColumnChartView colum_chart = (ColumnChartView) findViewById(R.id.columnchart);
         ColumnChartData colum_data;
-        int numSubcolums = 1;
         int numColums = items.size();
         List<Column> colums = new ArrayList<Column>();
         List<SubcolumnValue> values;
+
         for (int i = 0; i < numColums; i++) {
             values = new ArrayList<SubcolumnValue>();
             values.add(new SubcolumnValue(items.get(i), ChartUtils.pickColor()));
@@ -148,6 +144,7 @@ public class StatsActivity extends AppCompatActivity
             colum.setHasLabels(true);
             colums.add(colum);
         }
+
         colum_data = new ColumnChartData(colums);
         Axis axisX = new Axis().setHasLines(true);
         Axis axisY = new Axis().setHasLines(true);
@@ -155,6 +152,26 @@ public class StatsActivity extends AppCompatActivity
         axisY.setName("Rating");
         colum_data.setAxisYLeft(axisY);
         colum_chart.setColumnChartData(colum_data);
+        colum_chart.setOnValueTouchListener(new ColumnChartOnValueSelectListener() {
+            @Override
+            public void onValueSelected(int columnIndex, int subcolumnIndex, SubcolumnValue value) {
+                List<String> movie = new ArrayList<>();
+                String top5sql = "SELECT * FROM filmseries ORDER BY rating DESC LIMIT 5";
+                Cursor top5Score = mDatabase.rawQuery(top5sql, null);
+
+                while (top5Score.moveToNext()) {
+                    movie.add(top5Score.getString(1));
+                }
+                top5Score.close();
+
+                Toast.makeText(StatsActivity.this, movie.get(columnIndex), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onValueDeselected() {
+
+            }
+        });
     }
 
     @Override
@@ -180,12 +197,6 @@ public class StatsActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
