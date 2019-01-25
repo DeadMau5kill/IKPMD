@@ -84,7 +84,7 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
         String Comment = textComment.getText().toString().trim();
         String rating = textRating.getText().toString().replace(',', '.').trim();
         String sort = sort_spinner.getSelectedItem().toString();
-        String time = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+        String time = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
 
 
         String regex = "[+-]?([0-9]*[.])?[0-9]+";
@@ -108,7 +108,7 @@ public class FormActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(mainIntent);
 
             // Notify the user that the operation succeeded
-            Toast.makeText(this, "Je rating is toegevoegd!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Your like has been added!", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, "Wrong", Toast.LENGTH_SHORT).show();
         }

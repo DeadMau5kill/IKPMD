@@ -40,6 +40,8 @@ public class FilmsAdapter extends ArrayAdapter<Films> {
         TextView textViewRating = view.findViewById(R.id.textRating);
         TextView textViewSort = view.findViewById(R.id.textSort);
         TextView textViewTime = view.findViewById(R.id.textViewTime);
+        TextView textViewIMDBRating = view.findViewById(R.id.textViewIMDBrating);
+        TextView textViewYear = view.findViewById(R.id.textViewYear);
 
         final Films film = filmslist.get(position);
         textViewName.setText(film.getName());
@@ -47,6 +49,8 @@ public class FilmsAdapter extends ArrayAdapter<Films> {
         textViewRating.setText(String.valueOf(film.getRating()));
         textViewSort.setText(film.getSort());
         textViewTime.setText(film.getTime());
+        textViewIMDBRating.setText(String.valueOf(film.getImdb_rating()));
+        textViewYear.setText(String.valueOf(film.getOmdb_year()));
         view.findViewById(R.id.buttonDeleteEmployee).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,7 +98,9 @@ public class FilmsAdapter extends ArrayAdapter<Films> {
                         Filmcursor.getString(2),
                         Filmcursor.getInt(3),
                         Filmcursor.getString(4),
-                        Filmcursor.getString(5)
+                        Filmcursor.getString(5),
+                        Filmcursor.getFloat(6),
+                        Filmcursor.getInt(7)
                 ));
             } while (Filmcursor.moveToNext());
         }

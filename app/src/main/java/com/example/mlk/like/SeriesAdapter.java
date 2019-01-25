@@ -40,6 +40,8 @@ public class SeriesAdapter extends ArrayAdapter<Series> {
         TextView textViewRating = view.findViewById(R.id.textRating);
         TextView textViewSort = view.findViewById(R.id.textSort);
         TextView textViewTime = view.findViewById(R.id.textViewTime);
+        TextView textViewIMDBRating = view.findViewById(R.id.textViewIMDBrating);
+        TextView textViewYear = view.findViewById(R.id.textViewYear);
 
         final Series serie = serieslist.get(position);
         textViewName.setText(serie.getName());
@@ -47,6 +49,8 @@ public class SeriesAdapter extends ArrayAdapter<Series> {
         textViewRating.setText(String.valueOf(serie.getRating()));
         textViewSort.setText(serie.getSort());
         textViewTime.setText(serie.getTime());
+        textViewIMDBRating.setText(String.valueOf(serie.getImdb_rating()));
+        textViewYear.setText(String.valueOf(serie.getOmdb_year()));
         view.findViewById(R.id.buttonDeleteEmployee).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,7 +95,9 @@ public class SeriesAdapter extends ArrayAdapter<Series> {
                         Seriecursor.getString(2),
                         Seriecursor.getInt(3),
                         Seriecursor.getString(4),
-                        Seriecursor.getString(5)
+                        Seriecursor.getString(5),
+                        Seriecursor.getFloat(6),
+                        Seriecursor.getInt(7)
                 ));
             } while (Seriecursor.moveToNext());
         }

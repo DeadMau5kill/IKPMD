@@ -70,7 +70,9 @@ public class SeriesActivity extends AppCompatActivity
                         Seriecursor.getString(2),
                         Seriecursor.getFloat(3),
                         Seriecursor.getString(4),
-                        Seriecursor.getString(5)
+                        Seriecursor.getString(5),
+                        Seriecursor.getFloat(6),
+                        Seriecursor.getInt(7)
                 ));
             } while (Seriecursor.moveToNext());
 

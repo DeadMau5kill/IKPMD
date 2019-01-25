@@ -72,7 +72,9 @@ public class FilmActivity extends AppCompatActivity
                         Filmcursor.getString(2),
                         Filmcursor.getFloat(3),
                         Filmcursor.getString(4),
-                        Filmcursor.getString(5)
+                        Filmcursor.getString(5),
+                        Filmcursor.getFloat(6),
+                        Filmcursor.getInt(7)
                 ));
             } while (Filmcursor.moveToNext());
 
